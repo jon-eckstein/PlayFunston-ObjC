@@ -32,8 +32,9 @@
 	}
 	
 	-(BOOL) addBranchWithValues:(NSArray*)values andAnswer:(NSNumber*)answer andIsObserved:(BOOL)isObserved
-	{
+	{	
 		TreeNode *currentNode = [self head];
+		
 		//for(double value in [values objectEnumerator])
 		//for(NSUInteger i=0; i<=[values count]-1; i++)
 		for(id value in values)
@@ -41,7 +42,10 @@
 			//NSNumber* value = [values objectAtIndex:i];
 			int childCount = [[currentNode children] count];
 			
+			//NSLog(@"children count %d", childCount);
+			
 			BOOL addNewNode = NO;
+			
             //if there are no current children in the branch then add the current branch as a child.
             if (childCount == 0)
             {
@@ -82,7 +86,7 @@
                
            	//add the node
             if (addNewNode)
-            {
+            {                
                 TreeNode *newChild = nil;
                 if (isObserved)
                 {
@@ -96,9 +100,12 @@
                             							andChildren:nil
                             							andValue:value];
                 }
-                
+                                                                 
                 [[currentNode children] addObject:newChild];
-                currentNode = newChild;
+				NSLog(@"children count %u", [[currentNode children] count]);                  
+                currentNode = newChild;             
+                
+
             }
                
 	        //we're at the last value, so now we need to add the answer node...
@@ -123,6 +130,31 @@
 		return YES;
 	}
 	
+		
+	-(NSNumber*) computeWithValues:(NSArray*)values
+	{
+		TreeNode *currentNode = [self head];
+		
+		for(id value in values)
+		{
+			//find the node with the closest value and use that as the current tree path...
+			 
+			
+			NSArray *currentChildren = [[currentNode children] allObjects];
+			//currentChildren.select
+			TreeNode *sameValNode = [self findFirstNodeWithSameValueAs:value withOthers:currentChildren];               			
+			if(sameValNode)
+			{
+				currentNode = sameValNode;
+			}
+			else
+			{
+				
+			}
+		}
+		
+		return nil;
+	}	
 	
 	-(TreeNode*)findFirstNodeWithSameValueAs:(NSNumber*)val withOthers:(NSArray*)others
 	{
@@ -138,10 +170,16 @@
 		return nil;
 	}
 	
-	-(NSNumber*) computeWithValues:(NSArray*)values
-	{
-		return nil;
-	}	
+NSInteger* sort_treenode_comparer(id id1, id id2, void* context)
+{
+    // Sort Function
+    NSNumber *val = (NSNumber*)context;
+    TreeNode *treeNode1 = (TreeNode*)id1;  
+    TreeNode *treeNode2 = (TreeNode*)id2;  
+
+
+    return (NSInteger*)[treeNode1 compare:treeNode2]; 
+}
 	
 	
 	

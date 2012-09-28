@@ -15,23 +15,28 @@
 		if(self)
 		{
 			[self setParent:newParent];
-			[self setChildren:newChildren];
+			
+			if(newChildren)
+				[self setChildren:newChildren];
+			else
+				[self setChildren:[[NSMutableSet alloc] init]];
+				
 			[self setValue:newValue];			
 		}
 		
 		return self;
 	}
 	
-	-(int) compareTo:(TreeNode*)otherObject
+	-(NSInteger*) compare:(TreeNode*)otherObject
 	{
 		if([self value] == [otherObject value])
-			return 0;
+			return (NSInteger*)0;
 		
 		if([self value] > [otherObject value])
-			return 1;
+			return (NSInteger*)1;
 			
 		if([self value] < [otherObject value])
-			return -1;	
+			return (NSInteger*)-1;	
 	}
 
 @end
