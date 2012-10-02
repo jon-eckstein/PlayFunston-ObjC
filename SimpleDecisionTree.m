@@ -159,18 +159,12 @@
 	-(TreeNode*)findFirstNodeWithSameValueAs:(NSNumber*)val withOthers:(NSArray*)others
 	{
 		double dblVal = [val doubleValue];
-		//for((TreeNode*) other in others)
-		//for(int i=0;i<=[others count]-1;i++)
 		for(id other in others)
 		{	
 			double dblOther = [[other value] doubleValue];
-			
-			//if([[other value] isEqual:val])
-			if(dblOther == dblVal)
-			{
-				NSLog(@"other value:%@", [other value]);
-				return other;
-			}
+						
+			if(dblOther == dblVal)							
+				return other;			
 		}
 		
 		return nil;
