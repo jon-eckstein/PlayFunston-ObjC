@@ -15,5 +15,5 @@
 	@property (assign, nonatomic) NSNumber *value;
 	
 	-(id)initWithParent:(TreeNode*)parent andChildren: (NSMutableSet*)children andValue:(NSNumber*)value;
-	-(NSInteger*)compare:(TreeNode *)otherObject;
+	-(NSComparisonResult) compare:(TreeNode*)otherObject;
 @end

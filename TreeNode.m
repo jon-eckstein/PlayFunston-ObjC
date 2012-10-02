@@ -27,16 +27,16 @@
 		return self;
 	}
 	
-	-(NSInteger*) compare:(TreeNode*)otherObject
+	-(NSComparisonResult) compare:(TreeNode*)otherObject
 	{
 		if([self value] == [otherObject value])
-			return (NSInteger*)0;
+			return (NSComparisonResult)NSOrderedSame;
 		
 		if([self value] > [otherObject value])
-			return (NSInteger*)1;
+			return (NSComparisonResult)NSOrderedDescending;
 			
 		if([self value] < [otherObject value])
-			return (NSInteger*)-1;	
+			return (NSComparisonResult)NSOrderedAscending;	
 	}
 
 @end

@@ -82,8 +82,14 @@ int main(void)
 		//NSLog(@"third child: %@",[thirdChild value]);
 		//NSLog(@"answer: %@",[[thirdChild.children.allObjects objectAtIndex:0] value]);
 		
+		NSMutableArray *computeValues = [[NSMutableArray alloc] init];
+		[computeValues addObject:[NSNumber numberWithDouble:1]];
+		[computeValues addObject:[NSNumber numberWithDouble:3]];
+		[computeValues addObject:[NSNumber numberWithDouble:2]];
+		[computeValues addObject:[NSNumber numberWithDouble:1]];
 		
-		
+		NSNumber *computedAnswer = [decisionTree computeWithValues:computeValues];
+		NSLog(@"Computed answer: %@", computedAnswer);
 	}
 	@catch (id theException) {
 		NSLog(@"%@", theException);
