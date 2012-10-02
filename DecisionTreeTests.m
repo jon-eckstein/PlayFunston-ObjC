@@ -31,7 +31,7 @@ int main(void)
 		[values addObject:[NSNumber numberWithInt:3]];
 		[values addObject:[NSNumber numberWithInt:1]];		
 		
-		BOOL isBranchAdded = [decisionTree addBranchWithValues:values andAnswer:[NSNumber numberWithInt:1] andIsObserved:NO];
+		BOOL isBranchAdded = [decisionTree addBranchWithValues:values andAnswer:[NSNumber numberWithInt:7] andIsObserved:NO];
 		
 		
 		if(isBranchAdded)		
@@ -49,7 +49,7 @@ int main(void)
 														   [NSNumber numberWithInt:8],
 														   [NSNumber numberWithInt:8],
 														   [NSNumber numberWithInt:8]];
-		*/
+		
 		NSMutableArray *values2 = [[NSMutableArray alloc] init];
 		[values2 addObject:[NSNumber numberWithInt:2]];
 		[values2 addObject:[NSNumber numberWithInt:5]];
@@ -65,10 +65,16 @@ int main(void)
 			NSLog(@"Branch 2 not added.");
 			return -1;
 		}
-		
+		*/		
 		NSLog(@"head children count: %d",[decisionTree.head.children count]);
 		
-		
+		//follow a branch and make some assertions...
+		TreeNode* dtHead = [decisionTree head];
+		TreeNode* firstVal = (TreeNode*)[dtHead.children.allObjects objectAtIndex:1];
+		NSLog(@"first value: %@",[firstVal value]);
+		NSLog(@"firstNode children count %d", [[firstVal children] count]);
+		TreeNode* firstChild = (TreeNode*)[firstVal.children.allObjects objectAtIndex:1];		
+		NSLog(@"first child value: %@",[firstChild value]);
 							
 	}
 	@catch (id theException) {

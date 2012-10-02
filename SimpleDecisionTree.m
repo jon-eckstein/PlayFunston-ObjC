@@ -37,13 +37,13 @@
 		
 		//for(double value in [values objectEnumerator])
 		//for(NSUInteger i=0; i<=[values count]-1; i++)
+		
+		NSLog(@"values count: %u",[values count]);
+		
 		for(id value in values)
 		{
-			//NSNumber* value = [values objectAtIndex:i];
-			int childCount = [[currentNode children] count];
-			
-			//NSLog(@"children count %d", childCount);
-			
+			NSLog(@"current value: %@",value);
+			int childCount = [[currentNode children] count];								
 			BOOL addNewNode = NO;
 			
             //if there are no current children in the branch then add the current branch as a child.
@@ -59,7 +59,7 @@
 
                     if (sameValNode)                    
                     {
-                        
+                        NSLog(@"found same val node...%@",[sameValNode value]);
                         if (isObserved)
                         {
                             if([sameValNode isKindOfClass:[ObservedTreeNode class]])
@@ -102,31 +102,34 @@
                 }
                                                                  
                 [[currentNode children] addObject:newChild];
-				NSLog(@"children count %u", [[currentNode children] count]);                  
+				//NSLog(@"children count %u", [[currentNode children] count]);                  
                 currentNode = newChild;             
                 
 
             }
                
-	        //we're at the last value, so now we need to add the answer node...
-	        //if any answers already exist then we replace the current answer with this answer.
-	        [[currentNode children] removeAllObjects];
-	        TreeNode *answerNode;
-	        if (isObserved)
-	        {
-	            answerNode = [[ObservedTreeNode alloc] initWithParent:currentNode
-                            						   andChildren:nil
-                            						   andValue:answer];
-	        }
-	        else
-	        {
-				answerNode = [[TrainedTreeNode alloc] initWithParent:currentNode
-                            						  andChildren:nil
-                            						  andValue:answer];
-	        }
 	        
-	        [[currentNode children] addObject:answerNode];  
-		}		
+		}	
+		
+		//we're at the last value, so now we need to add the answer node...
+        //if any answers already exist then we replace the current answer with this answer.
+        [[currentNode children] removeAllObjects];
+        TreeNode *answerNode;
+        if (isObserved)
+        {
+            answerNode = [[ObservedTreeNode alloc] initWithParent:currentNode
+                        						   andChildren:nil
+                        						   andValue:answer];
+        }
+        else
+        {	            
+			answerNode = [[TrainedTreeNode alloc] initWithParent:currentNode
+                        						  andChildren:nil
+                        						  andValue:answer];
+        }
+
+        [[currentNode children] addObject:answerNode];  
+			
 		return YES;
 	}
 	
@@ -137,11 +140,8 @@
 		
 		for(id value in values)
 		{
-			//find the node with the closest value and use that as the current tree path...
-			 
-			
+			//find the node with the closest value and use that as the current tree path...			 			
 			NSArray *currentChildren = [[currentNode children] allObjects];
-			//currentChildren.select
 			TreeNode *sameValNode = [self findFirstNodeWithSameValueAs:value withOthers:currentChildren];               			
 			if(sameValNode)
 			{
@@ -158,13 +158,19 @@
 	
 	-(TreeNode*)findFirstNodeWithSameValueAs:(NSNumber*)val withOthers:(NSArray*)others
 	{
+		double dblVal = [val doubleValue];
 		//for((TreeNode*) other in others)
 		//for(int i=0;i<=[others count]-1;i++)
 		for(id other in others)
-		{
-			//TreeNode* other = (TreeNode*)[others objectAtIndex:i];	
-			if([[other value] isEqual:val])
+		{	
+			double dblOther = [[other value] doubleValue];
+			
+			//if([[other value] isEqual:val])
+			if(dblOther == dblVal)
+			{
+				NSLog(@"other value:%@", [other value]);
 				return other;
+			}
 		}
 		
 		return nil;
