@@ -170,7 +170,7 @@
 			TrainedTreeNode *topNode = (TrainedTreeNode*)[sorted objectAtIndex:0];
 			if(topNode){
 				currentNode = topNode;
-				NSLog(@"computed current value %@",[currentNode value]);
+				//NSLog(@"computed current value %@",[currentNode value]);
 			}else{
 				NSLog(@"No topNode!!");
 				return nil;

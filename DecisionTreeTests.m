@@ -89,7 +89,43 @@ int main(void)
 		[computeValues addObject:[NSNumber numberWithDouble:1]];
 		
 		NSNumber *computedAnswer = [decisionTree computeWithValues:computeValues];
-		NSLog(@"Computed answer: %@", computedAnswer);
+		assert([computedAnswer intValue] == 5);
+		
+		
+		//need to test with a more complex tree...will add a branch that causes
+		NSMutableArray *valuesComplex1 = [[NSMutableArray alloc] init];
+		[valuesComplex1 addObject:[NSNumber numberWithInt:3]];
+		[valuesComplex1 addObject:[NSNumber numberWithInt:8]];
+		[valuesComplex1 addObject:[NSNumber numberWithInt:9]];
+		[valuesComplex1 addObject:[NSNumber numberWithInt:5]];		
+		
+		isBranchAdded = [decisionTree addBranchWithValues:valuesComplex1 andAnswer:[NSNumber numberWithInt:6] andIsObserved:NO];
+
+		NSMutableArray *valuesComplex2 = [[NSMutableArray alloc] init];
+		[valuesComplex2 addObject:[NSNumber numberWithInt:3]];
+		[valuesComplex2 addObject:[NSNumber numberWithInt:8]];
+		[valuesComplex2 addObject:[NSNumber numberWithInt:1]];
+		[valuesComplex2 addObject:[NSNumber numberWithInt:4]];		
+		
+		isBranchAdded = [decisionTree addBranchWithValues:valuesComplex2 andAnswer:[NSNumber numberWithInt:11] andIsObserved:NO];
+		
+		
+		NSMutableArray *computeValuesComplex = [[NSMutableArray alloc] init];
+		[computeValuesComplex addObject:[NSNumber numberWithDouble:3]];
+		[computeValuesComplex addObject:[NSNumber numberWithDouble:7]];
+		[computeValuesComplex addObject:[NSNumber numberWithDouble:2]];
+		[computeValuesComplex addObject:[NSNumber numberWithDouble:1]];
+		
+		NSNumber *computedAnswerComplex = [decisionTree computeWithValues:computeValuesComplex];
+		assert([computedAnswerComplex intValue] == 11);
+		//NSLog(@"complex answer is %@",computedAnswerComplex);
+		
+		//let's change the value of one of the values in the complex set and see if the branch path changes...
+		[computeValuesComplex replaceObjectAtIndex:2 withObject:[NSNumber numberWithDouble:7]];
+		computedAnswerComplex = [decisionTree computeWithValues:computeValuesComplex];
+		assert([computedAnswerComplex intValue] == 6);
+		
+		
 	}
 	@catch (id theException) {
 		NSLog(@"%@", theException);
