@@ -1,6 +1,6 @@
 #include <Foundation/Foundation.h>
 #include <assert.h>
-#import "SimpleDecisionTree.m"
+#import "DecisionTree/SimpleDecisionTree.m"
 
 int main(void)	
 {		
@@ -91,7 +91,6 @@ int main(void)
 		NSNumber *computedAnswer = [decisionTree computeWithValues:computeValues];
 		assert([computedAnswer intValue] == 5);
 		
-		
 		//need to test with a more complex tree...will add a branch that causes
 		NSMutableArray *valuesComplex1 = [[NSMutableArray alloc] init];
 		[valuesComplex1 addObject:[NSNumber numberWithInt:3]];
@@ -124,6 +123,24 @@ int main(void)
 		[computeValuesComplex replaceObjectAtIndex:2 withObject:[NSNumber numberWithDouble:7]];
 		computedAnswerComplex = [decisionTree computeWithValues:computeValuesComplex];
 		assert([computedAnswerComplex intValue] == 6);
+		
+		
+		//add an observed branch and see how the compute reacts...
+		NSMutableArray *valuesObserved = [[NSMutableArray alloc] init];
+		[valuesObserved addObject:[NSNumber numberWithInt:3]];
+		[valuesObserved addObject:[NSNumber numberWithInt:8]];
+		[valuesObserved addObject:[NSNumber numberWithInt:8]];
+		[valuesObserved addObject:[NSNumber numberWithInt:8]];		
+		
+		isBranchAdded = [decisionTree addBranchWithValues:valuesObserved andAnswer:[NSNumber numberWithInt:60] andIsObserved:YES];
+		
+		//change the value back to original value...	
+		[computeValuesComplex replaceObjectAtIndex:2 withObject:[NSNumber numberWithDouble:2]];
+			
+		//try to compute again...
+		NSNumber *computedAnswerObserved = [decisionTree computeWithValues:computeValuesComplex];
+		assert([computedAnswerObserved intValue] == 11);
+		NSLog(@"answer with observed branch is: %@",computedAnswerObserved);
 		
 		
 	}

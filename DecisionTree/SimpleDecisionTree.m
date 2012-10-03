@@ -38,11 +38,11 @@
 		//for(double value in [values objectEnumerator])
 		//for(NSUInteger i=0; i<=[values count]-1; i++)
 		
-		NSLog(@"values count: %u",[values count]);
+		//NSLog(@"values count: %u",[values count]);
 		
 		for(id value in values)
 		{
-			NSLog(@"current value: %@",value);
+			//NSLog(@"current value: %@",value);
 			int childCount = [[currentNode children] count];								
 			BOOL addNewNode = NO;
 			
@@ -59,7 +59,7 @@
 
                     if (sameValNode)                    
                     {
-                        NSLog(@"found same val node...%@",[sameValNode value]);
+                        //NSLog(@"found same val node...%@",[sameValNode value]);
                         if (isObserved)
                         {
                             if([sameValNode isKindOfClass:[ObservedTreeNode class]])
@@ -144,16 +144,27 @@
 		
 		double diff1 = abs([[treeNode1 value] doubleValue] - value);
 		double diff2 = abs([[treeNode2 value] doubleValue] - value);
+		//NSLog(@"node1Val:%@, nodeVal2:%@, value:%f",[treeNode1 value], [treeNode2 value], value);
+		//NSLog(@"diff1: %f",diff1);
+		//NSLog(@"diff2: %f",diff2);
 		
 		//if the diffs are the same then prefer Observed Nodes to Trained nodes.
 		if(diff1 == diff2)
 		{
-			if([treeNode1 isKindOfClass:[ObservedTreeNode class]])
-				return NSOrderedAscending;
+			if([treeNode1 isKindOfClass:[ObservedTreeNode class]]){
+				NSLog(@"found observed on node 1.");
+				return NSOrderedAscending;				
+			}				
 			else if([treeNode2 isKindOfClass:[ObservedTreeNode class]])
+			{
+				NSLog(@"found observed on node 1.");
 				return NSOrderedDescending;
+			}				
 			else
+			{
+				NSLog(@"same same.");
 				return NSOrderedSame;							
+			}
 		}
 		
 		
@@ -162,7 +173,6 @@
     	else if (diff1 > diff2)
         	return NSOrderedDescending;
 						
-	    //return (NSInteger)[treeNode1 compare:treeNode2]; 
 	}
 		
 	-(NSNumber*) computeWithValues:(NSArray*)values
@@ -175,7 +185,7 @@
 			NSArray *currentChildren = [[currentNode children] allObjects];
 			
 			
-			NSArray* sorted = [currentChildren sortedArrayUsingFunction:sortTreeNodeComparer context:value];
+			NSArray *sorted = [currentChildren sortedArrayUsingFunction:sortTreeNodeComparer context:value];
 			
 			TrainedTreeNode *topNode = (TrainedTreeNode*)[sorted objectAtIndex:0];
 			if(topNode){
@@ -185,17 +195,7 @@
 				NSLog(@"No topNode!!");
 				return nil;
 			}
-			
-			/*
-			TreeNode *sameValNode = [self findFirstNodeWithSameValueAs:value withOthers:currentChildren];               			
-			if(sameValNode)
-			{
-				currentNode = sameValNode;
-			}
-			else
-			{
-				
-			}*/
+						
 		}
 		
 		//the current node should be the last in the followed branch..
