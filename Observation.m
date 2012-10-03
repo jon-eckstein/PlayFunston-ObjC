@@ -40,6 +40,17 @@
 	}
 	
 	
+	-(NSArray*) treeValues
+	{
+		NSMutableArray *values = [[NSMutableArray alloc] init];
+		[values addObject:[NSNumber numberWithInt:[self conditionCode]]];
+		[values addObject:[NSNumber numberWithDouble:[self temp]]];
+		[values addObject:[NSNumber numberWithDouble:[self windChill]]];
+		[values addObject:[NSNumber numberWithDouble:[self windMph]]];
+		[values addObject:[NSNumber numberWithDouble:[self windGustMph]]];
+		return values;
+	}
+	
 	
 	
 @end

@@ -28,6 +28,7 @@
     @property (assign) NSUInteger tideScore;
     @property (assign) BOOL isObservedByUser;
     @property (assign) NSUInteger goFunston;
+    @property (readonly) NSArray* treeValues;
 	
 		
 	+(NSUInteger)getConditionCodeWithWeather:(NSString*)weather;
