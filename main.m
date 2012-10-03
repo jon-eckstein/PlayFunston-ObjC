@@ -1,8 +1,6 @@
 #include <Foundation/Foundation.h>
-#import "TreeNode.m"
-#import "ObservedTreeNode.m"
-#import "TrainedTreeNode.m"
-#import "SimpleDecisionTree.m"
+#import "Observation.m"
+#import "DecisionTree/SimpleDecisionTree.m"
 
 int main(void)
 {
@@ -17,9 +15,7 @@ int main(void)
 	
 	SimpleDecisionTree *decisionTree = [[SimpleDecisionTree alloc] initWithHead:headNode];	
 	
-	
-	
-	
+	Observation *obs = [[Observation alloc] init];
 	
 	
 }
