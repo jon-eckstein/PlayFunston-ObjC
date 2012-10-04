@@ -8,7 +8,8 @@
 {
 	SimpleDecisionTree *decisionTree;	
 }
-		
+	-(void)trainTree;
+	-(NSArray*)getTrainingData;	
 	-(double)getDecisionWithObservation:(Observation*)observation;
 	-(Observation*)getCurrentWeatherData;	
 		

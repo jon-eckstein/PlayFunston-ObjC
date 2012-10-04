@@ -16,11 +16,29 @@
 	@synthesize isObservedByUser;
     @synthesize goFunston;
 	//@synthesize treeValues;	
+/*
+private static int GetConditionCode(string weather)
+        {
 
+            if (weather.Contains(new[] { "Clear", "Partly Cloudy", "Scattered Clouds", "Haze" }))
+                return (int)Conditions.Good;
+
+            if (weather.Contains(new[] { "Mostly Cloudy", "Overcast", "Fog", "Mist" }))
+                return (int)Conditions.Maybe;
+
+            return (int)Conditions.Bad;
+        }   
+*/
 
 	+(NSUInteger)getConditionCodeWithWeather:(NSString*)weather
 	{
-		return 0;
+		NSArray *goodWeather = [[NSArray alloc] initWithObjects:@"Clear", @"Partly Cloudy",@"Scattered Clouds", @"Haze"]; 		
+		
+		if([goodWeather containsObject:weather])
+			return 1;
+		else		
+			return 0;
+		
 	}
 
 	-(id)initWithCode:(NSUInteger)newCode andTemperature:(double)newTemp andWindChill:(double)newWindChill andWindMph:(double)newWindMph andWindGustMph:(double)newWindGustMph andGoFunston:(NSUInteger)newGo

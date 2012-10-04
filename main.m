@@ -5,6 +5,7 @@
 
 int main(void)
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	//TreeNode *node = [[TreeNode alloc] init];
 	//ObservedTreeNode *observedNode = [[ObservedTreeNode alloc] init];
 	//TrainedTreeNode *trainedNode = [[TrainedTreeNode alloc] init];
@@ -21,4 +22,5 @@ int main(void)
 	
 	Controller *ctrl = [[Controller alloc] init];	
 	
+	[pool release];
 }
