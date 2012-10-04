@@ -32,12 +32,25 @@ private static int GetConditionCode(string weather)
 
 	+(NSUInteger)getConditionCodeWithWeather:(NSString*)weather
 	{
-		NSArray *goodWeather = [[NSArray alloc] initWithObjects:@"Clear", @"Partly Cloudy",@"Scattered Clouds", @"Haze"]; 		
+		NSMutableArray *goodWeather = [[NSMutableArray alloc] init];
+		[goodWeather addObject:@"Clear"]; 		
+		[goodWeather addObject:@"Partly Cloudy"];
+		[goodWeather addObject:@"Scattered Clouds"];
+		[goodWeather addObject:@"Haze"];
+		
+		NSMutableArray *maybeWeather = [[NSMutableArray alloc] init];
+		[maybeWeather addObject:@"Mostly Cloudy"]; 		
+		[maybeWeather addObject:@"Overcast"];
+		[maybeWeather addObject:@"Fog"];
+		[maybeWeather addObject:@"Mist"];
 		
 		if([goodWeather containsObject:weather])
 			return 1;
-		else		
+			
+		if([maybeWeather containsObject:weather])
 			return 0;
+		
+		return -1;
 		
 	}
 

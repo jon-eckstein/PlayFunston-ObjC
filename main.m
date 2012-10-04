@@ -21,6 +21,9 @@ int main(void)
 	*/
 	
 	Controller *ctrl = [[Controller alloc] init];	
+	NSLog(@"controller: %@",ctrl);
+	[ctrl getCurrentWeatherData];
+		
 	
 	[pool release];
 }

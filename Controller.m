@@ -42,6 +42,8 @@
 			decisionTree = [[SimpleDecisionTree alloc] init];	
 			[self trainTree];
 		}
+		
+		return self;
 	}
 	
 	-(double)getDecisionWithObservation:(Observation*)observation
@@ -52,6 +54,29 @@
 	
 	-(Observation*)getCurrentWeatherData
 	{
+		NSLog(@"Getting current waether data...");
+		NSURL *url = [NSURL URLWithString:@"http://api.wunderground.com/api/f88d918861288deb/conditions/tide/q/pws:KCASANFR69.xml"];
+		NSURLRequest *request = [NSURLRequest requestWithURL:url];
+		NSURLResponse *response = nil;
+		NSError *err = nil;
+		
+		NSData *data = [NSURLConnection sendSynchronousRequest:request 
+									returningResponse:&response 
+									error:&err];
+		
+		NSString* xml = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
+		NSLog(@"weather data: %@",xml);							
+		
+		
+		GSXMLParser *parser = [GSXMLParser parserWithContentsOfURL: url];
+		
+		/*
+		GSXMLParser *parser = [GSXMLParser parserWithSAXHandler: nil
+                                            withContentsOfURL: url];*/
+
+	    [parser parse];
+		
+													
 		return nil;
 	}
 	
