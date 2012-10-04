@@ -34,11 +34,7 @@
 	-(BOOL) addBranchWithValues:(NSArray*)values andAnswer:(NSNumber*)answer andIsObserved:(BOOL)isObserved
 	{	
 		TreeNode *currentNode = [self head];
-		
-		//for(double value in [values objectEnumerator])
-		//for(NSUInteger i=0; i<=[values count]-1; i++)
-		
-		//NSLog(@"values count: %u",[values count]);
+				
 		
 		for(id value in values)
 		{
@@ -151,18 +147,16 @@
 		//if the diffs are the same then prefer Observed Nodes to Trained nodes.
 		if(diff1 == diff2)
 		{
-			if([treeNode1 isKindOfClass:[ObservedTreeNode class]]){
-				NSLog(@"found observed on node 1.");
+			if([treeNode1 isKindOfClass:[ObservedTreeNode class]])
+			{				
 				return NSOrderedAscending;				
 			}				
 			else if([treeNode2 isKindOfClass:[ObservedTreeNode class]])
 			{
-				NSLog(@"found observed on node 1.");
 				return NSOrderedDescending;
 			}				
 			else
-			{
-				NSLog(@"same same.");
+			{				
 				return NSOrderedSame;							
 			}
 		}

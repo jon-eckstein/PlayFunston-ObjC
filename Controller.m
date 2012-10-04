@@ -1,7 +1,6 @@
 #include <Foundation/Foundation.h>
 #import "Controller.h"
 #import "Observation.m"
-#import "XMLHandler.h"
 
 @implementation Controller
 
@@ -54,8 +53,7 @@
 	}
 	
 	-(Observation*)getCurrentWeatherData
-	{
-		NSLog(@"Getting current waether data...");
+	{		
 		NSURL *url = [NSURL URLWithString:@"http://api.wunderground.com/api/f88d918861288deb/conditions/q/pws:KCASANFR69.xml"];
 		NSURLRequest *request = [NSURLRequest requestWithURL:url];
 		NSURLResponse *response = nil;
@@ -77,8 +75,7 @@
 		
 		
 	    BOOL parsed = [parser parse];
-	    if(parsed){	        
-	    	NSLog(@"document is parsed");
+	    if(parsed){	        	    	
 	    	NSString *xPathRootString = @"string(/response/current_observation/%@)";
 	    	NSString *xPathRootNumber = @"number(/response/current_observation/%@)";
 	    	GSXPathContext *ctx = [[GSXPathContext alloc] initWithDocument: [parser document]];
@@ -100,8 +97,7 @@
 			double windGustMph = [resultNumber doubleValue];
 			
 			Observation *currentObs = [[Observation alloc] initWithWeather:weather andTemperature:temp andWindChill:windChill andWindMph:windMph andWindGustMph:windGustMph];
-			//[newObs setWindMph:[result doubleValue]];			
-			//NSLog(@"local epoch: %f", [newObs windMph]);
+			
 			return currentObs;
 	    }	    	
 																				

@@ -15,21 +15,7 @@
     @synthesize tideScore;
 	@synthesize isObservedByUser;
     @synthesize goFunston;
-	//@synthesize treeValues;	
-/*
-private static int GetConditionCode(string weather)
-        {
-
-            if (weather.Contains(new[] { "Clear", "Partly Cloudy", "Scattered Clouds", "Haze" }))
-                return (int)Conditions.Good;
-
-            if (weather.Contains(new[] { "Mostly Cloudy", "Overcast", "Fog", "Mist" }))
-                return (int)Conditions.Maybe;
-
-            return (int)Conditions.Bad;
-        }   
-*/
-
+	
 	+(NSUInteger)getConditionCodeWithWeather:(NSString*)weather
 	{
 		NSMutableArray *goodWeather = [[NSMutableArray alloc] init];
@@ -74,8 +60,8 @@ private static int GetConditionCode(string weather)
 	{
 		NSUInteger code = [Observation getConditionCodeWithWeather:weather];
 		self = [self initWithCode:code andTemperature:newTemp andWindChill:newWindChill andWindMph:newWindMph andWindGustMph:newWindGustMph andGoFunston:0];
+		[self setCondition:weather];
 		return self;
-		
 	}
 	
 	
