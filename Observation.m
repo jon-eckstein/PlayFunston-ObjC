@@ -70,6 +70,14 @@ private static int GetConditionCode(string weather)
 		return self;
 	}
 	
+	-(id)initWithWeather:(NSString*)weather andTemperature:(double)newTemp andWindChill:(double)newWindChill andWindMph:(double)newWindMph andWindGustMph:(double)newWindGustMph
+	{
+		NSUInteger code = [Observation getConditionCodeWithWeather:weather];
+		self = [self initWithCode:code andTemperature:newTemp andWindChill:newWindChill andWindMph:newWindMph andWindGustMph:newWindGustMph andGoFunston:0];
+		return self;
+		
+	}
+	
 	
 	-(NSArray*) treeValues
 	{

@@ -33,5 +33,6 @@
 		
 	+(NSUInteger)getConditionCodeWithWeather:(NSString*)weather;
 	-(id)initWithCode:(NSUInteger)code andTemperature:(double)temp andWindChill:(double)windChill andWindMph:(double)windMph andWindGustMph:(double)windGustMph andGoFunston:(NSUInteger)go;
+	-(id)initWithWeather:(NSString*)weather andTemperature:(double)temp andWindChill:(double)windChill andWindMph:(double)windMph andWindGustMph:(double)windGustMph;
 		
 @end

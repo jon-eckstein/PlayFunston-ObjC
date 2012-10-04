@@ -1,6 +1,7 @@
 #include <Foundation/Foundation.h>
 #import "Controller.h"
 #import "Observation.m"
+#import "XMLHandler.h"
 
 @implementation Controller
 
@@ -55,28 +56,55 @@
 	-(Observation*)getCurrentWeatherData
 	{
 		NSLog(@"Getting current waether data...");
-		NSURL *url = [NSURL URLWithString:@"http://api.wunderground.com/api/f88d918861288deb/conditions/tide/q/pws:KCASANFR69.xml"];
+		NSURL *url = [NSURL URLWithString:@"http://api.wunderground.com/api/f88d918861288deb/conditions/q/pws:KCASANFR69.xml"];
 		NSURLRequest *request = [NSURLRequest requestWithURL:url];
 		NSURLResponse *response = nil;
 		NSError *err = nil;
-		
+		/*
 		NSData *data = [NSURLConnection sendSynchronousRequest:request 
 									returningResponse:&response 
 									error:&err];
 		
 		NSString* xml = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
 		NSLog(@"weather data: %@",xml);							
+		*/
+		
 		
 		
 		GSXMLParser *parser = [GSXMLParser parserWithContentsOfURL: url];
 		
-		/*
-		GSXMLParser *parser = [GSXMLParser parserWithSAXHandler: nil
-                                            withContentsOfURL: url];*/
-
-	    [parser parse];
 		
-													
+		
+		
+	    BOOL parsed = [parser parse];
+	    if(parsed){	        
+	    	NSLog(@"document is parsed");
+	    	NSString *xPathRootString = @"string(/response/current_observation/%@)";
+	    	NSString *xPathRootNumber = @"number(/response/current_observation/%@)";
+	    	GSXPathContext *ctx = [[GSXPathContext alloc] initWithDocument: [parser document]];
+			GSXPathNumber *resultNumber = nil;
+			GSXPathString *resultString = nil;
+			resultString = (GSXPathString *) [ctx evaluateExpression: [NSString stringWithFormat:xPathRootString,@"weather"]];
+			NSString *weather = [resultString stringValue];
+			
+			resultNumber = (GSXPathNumber *) [ctx evaluateExpression: [NSString stringWithFormat:xPathRootNumber,@"temp_f"]];			
+			double temp = [resultNumber doubleValue];
+
+			resultNumber = (GSXPathNumber *) [ctx evaluateExpression: [NSString stringWithFormat:xPathRootNumber,@"windchill_f"]];			
+			double windChill = [resultNumber doubleValue];
+			
+			resultNumber = (GSXPathNumber *) [ctx evaluateExpression: [NSString stringWithFormat:xPathRootNumber,@"wind_mph"]];			
+			double windMph = [resultNumber doubleValue];
+			
+			resultNumber = (GSXPathNumber *) [ctx evaluateExpression: [NSString stringWithFormat:xPathRootNumber,@"wind_gust_mph"]];			
+			double windGustMph = [resultNumber doubleValue];
+			
+			Observation *currentObs = [[Observation alloc] initWithWeather:weather andTemperature:temp andWindChill:windChill andWindMph:windMph andWindGustMph:windGustMph];
+			//[newObs setWindMph:[result doubleValue]];			
+			//NSLog(@"local epoch: %f", [newObs windMph]);
+			return currentObs;
+	    }	    	
+																				
 		return nil;
 	}
 	

@@ -6,24 +6,12 @@
 int main(void)
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	//TreeNode *node = [[TreeNode alloc] init];
-	//ObservedTreeNode *observedNode = [[ObservedTreeNode alloc] init];
-	//TrainedTreeNode *trainedNode = [[TrainedTreeNode alloc] init];
-	/*
-	TreeNode *headNode = [[TreeNode alloc] initWithParent:[[TreeNode alloc] init]
-										   andChildren:[[NSSet alloc] init]
-										   andValue:nil
-						 ];
-	
-	SimpleDecisionTree *decisionTree = [[SimpleDecisionTree alloc] initWithHead:headNode];	
-	
-	Observation *obs = [[Observation alloc] init];
-	*/
-	
-	Controller *ctrl = [[Controller alloc] init];	
-	NSLog(@"controller: %@",ctrl);
-	[ctrl getCurrentWeatherData];
 		
+	Controller *ctrl = [[Controller alloc] init];	
+	Observation *obs = [ctrl getCurrentWeatherData];
+	double answer = [ctrl getDecisionWithObservation:obs];	
+	NSLog(@"The answer is %f", answer);
+	
 	
 	[pool release];
 }
